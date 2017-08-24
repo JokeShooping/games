@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+	div {
+	width:200px;
+	height:200px;
+	margin-top:100px;
+	margin-right:auto;
+	text-align: center;
+	line-height: 200px;
+	/*font-size: 30px;*/
+	font-size: 18px;
+	color: red;
+	margin-left:auto;
+}
+.whole {
+	width:200px;
+	position:relative;
+	transition:all 3s;
+	/* 设置使得变形能体现立体效果，通常给需要变形的元素的父元素设置  透视*/
+			transform-style:preserve-3d;
+}
+.div1 {
+	background-color:blue;
+	position:absolute;
+	top:0px;
+	/*沿x轴平移100px， 而y轴方向不动*/
+	/*transform:translate(100px);*/
+
+	/*沿z轴平移100px*/
+	transform:translateZ(100px);
+	/*沿着 z 轴旋转    旋转默认沿着几何的中心轴来旋转*/
+
+	 transform:rotate3d(90,1,1,90deg);
+	/* 90表示的是x轴 ，1分别表示y ,z轴 90deg表示旋转的角度 */
+
+
+}
+.div2 {
+	background-color:gray ;
+	position:absolute;
+	top:0px;
+	/* 先在Y轴上顺时针旋转 90 度 ，然后沿着z轴平移 100px */
+	transform:rotateY(90deg) translateZ(100px);
+
+	 /*transform: translateZ(200px);*/
+}
+.div3 {
+	background-color:red;
+	position:absolute;
+	top:0px;
+	/* 先在X轴上顺时针旋转 90 度 ，然后沿着z轴平移 100px */
+	transform:rotateX(90deg) translateZ(100px);
+}
+.div4 {
+	background-color:purple;
+	position:absolute;
+	top:0px;
+	/* 先在Y轴上顺时针旋转 180度 ，然后沿着z轴平移 100px */
+	transform:rotateY(180deg) translateZ(100px);
+}
+.div5 {
+	background-color:green;
+	position:absolute;
+	top:0px;
+	/* 先在Y轴上逆时针旋转 90 度 ，然后沿着z轴平移 100px */
+	transform:rotateY(-90deg) translateZ(100px);
+}
+.div6 {
+	background-color:orange;
+	position:absolute;
+	top:0px;
+	/* 先在X轴上逆时针旋转 90 度 ，然后沿着z轴平移 100px */
+	transform:rotateX(-90deg) translateZ(100px);
+}
+.whole:hover {
+	/*先在Z轴上移动 100px  然后在进行旋转*/
+	transform:translate3d(0px,0px,100px) rotate3d(360,360,360,360deg);
+}
+
+	</style>
+</head>
+<body>
+    
+  
+ 
+   <div class="whole">
+    <div class="div1">夜语馨诚</div>
+    <div class="div2">漫山遍野</div>
+    <div class="div3">晨霏凌月</div>
+    <div class="div4">慧玲随遇</div>
+    <div class="div5">幽歆慕颜</div>
+    <div class="div6">雨落辰星</div>
+   <!-- </div> -->
+
+     <!-- 外层div -->
+	<div class="whole">
+	<!-- 内层放6个div -->
+    <div class="div1"></div>
+    <div class="div2"></div>
+    <div class="div3"></div>
+    <div class="div4"></div>
+    <div class="div5"></div>
+    <div class="div6"></div>
+</div>
+</div>
+</body>
+</html>

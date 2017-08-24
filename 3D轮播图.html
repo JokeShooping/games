@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+     *{
+     	margin: 0;
+     	padding: 0;
+     }
+     body{
+     	overflow: hidden; 
+     }
+     #perser{
+     	perspective: 800px;
+     }
+     #wrap{
+         width:120px;
+         height:180px;
+         /*border:1px solid red;*/
+         position:relative;
+         margin:0 auto;
+         /*创建3D场景*/
+         transform-style: preserve-3d;
+         /*让照片出现后上下呈现一定的角度*/
+         transform:rotateX(-10deg) rotateY(0deg);
+     }
+     #wrap img{
+         position:absolute;
+         width:100%;
+         height:100%;
+         /*background-color: fuchsia;*/
+         border-radius:5px;
+         /*给照片添加圆角和阴影*/
+         box-shadow: 0 0 2px fuchsia;
+         transform:rotateY(0deg) translateZ(0px);
+         /*box-reflect倒影:朝向 偏移  遮盖  *//*线性渐变(从哪里开始) 开始时候的颜色  结束时候的颜色*/
+         -webkit-box-reflect:below 5px -webkit-linear-gradient(top,rgba(0,0,0,0) 40%,
+         rgba(0,0,0,0.5) 100%);
+     }
+     #wrap p{
+         width:1200px;
+         height:1200px;
+         /*径向渐变 (从哪里开始) 扩散程度 开始时候的颜色  结束时候的颜色*/
+         background:-webkit-radial-gradient(center center,600px 600px,
+         rgba(244,23,134,0.2),rgba(0,0,0,0));
+         border-radius:100%;
+         position:absolute;
+         left:50%;
+         top:102%;
+         margin-left:-600px;
+         margin-top:-600px;
+         transform:rotateX(90deg);
+     }
+	</style>
+</head>
+<body style="background-color: black">
+	<div id="perser">
+    <div id="wrap">
+        <img src="img/3.jpg" alt="">
+        <img src="img/2.jpg" alt="">
+        <img src="img/1.jpg" alt="">
+        <img src="img/4.jpg" alt="">
+        <img src="img/6.jpg" alt="">
+        <img src="img/5.jpg" alt="">
+        <img src="img/7.jpg" alt="">
+        <img src="img/10.jpg" alt="">
+        <img src="img/11.jpg" alt="">
+        <img src="img/9.jpg" alt="">
+        <img src="img/8.jpg" alt="">
+        <p></p>
+    </div>
+</div>
+<script type="text/javascript">
+    //窗口的加载事件
+ window.onload=function(){
+     var Perser = document.getElementById('wrap');
+     var imgs = document.getElementsByTagName('img');
+     var imgLength= imgs.length;
+     var Degs = 360/ imgLength;
+     var nowX;
+     var nowY;
+     var lastX;
+     var lastY;
+     var minuseX = 0;
+     var minuseY = 0;
+     var rowX = -10;
+     var rowY = 0;
+     var timer;
+
+ 	 //给图片设置旋转的角度
+     for(var i=0;i<imgLength;i++){
+         imgs[i].style.transform = 'rotateY('+i*Degs+'deg)translateZ(350px)'
+         imgs[i].style.transition = 'transform 1s '+ (imgLength-1-i)*0.1 +'s';
+     }
+     mTop();
+     // 窗口调整大小的时候
+     window.onresize = mTop;
+
+     function mTop(){
+         var wH = document.documentElement.clientHeight;
+         Perser.style.marginTop = wH / 2 - 180 + 'px';
+     }
+
+//  第一个是鼠标的按下事件
+     document.onmousedown = function(ev){
+//         做事件处理时候区分IE和其他浏览器事件对象
+         ev = ev ||window.event;
+         lastX = ev.clientX;
+         lastY = ev.clientY;
+
+           //移动事件
+          //需要获取的的是鼠标移动的坐标值 求差值  把差值作为rotate的值
+         this.onmousemove = function(ev){
+             ev =ev||window.event;
+             clearInterval(timer);
+             nowX = ev.clientX;
+             nowY = ev.clientY;
+              // 求差值
+             minuseX = nowX - lastX;
+             minuseY = nowY - lastY;
+            //更新Perser的旋转角度，拖拽越快--> minuse变化越大->
+            //rowY变化越大  旋转越快
+             rowX -= minuseY*0.1
+             rowY += minuseX*0.2
+//             console.log(rowX)
+
+             Perser.style.transform ='rotateX('+rowX+'deg) rotateY('+rowY+'deg)';
+            // 随着鼠标移动,当前点成前一点
+             lastX = nowX;
+             lastY = nowY;
+         }
+
+          // 第三个鼠标的提起事件
+         this.onmouseup = function(){
+                // 清除移动事件
+             this.onmousemove = null;
+            //设置定时器 让差值逐渐减小  形成类似惯性的运动效果
+             timer =setInterval(function(){
+                 // 让差值无限次乘以一个小数  值会无限接近零 但不会等于零
+                 minuseX *= 0.95;
+                 minuseY *= 0.95;
+                 rowY += minuseX*0.2;
+                 rowX -= minuseY*0.1;
+                 Perser.style.transform ='rotateX('+rowX+'deg)rotateY('+rowY+'deg)';
+                 if(Math.abs(minuseX)<0.2&&Math.abs(minuseY)<0.1){
+                     clearInterval(timer);
+                 }
+             },13)
+         }
+         //  取消鼠标的默认事件
+         return  false;
+     }
+ }
+</script>
+</body>
+</html>

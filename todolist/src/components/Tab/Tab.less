@@ -1,0 +1,17 @@
+@size:200px;
+.tab{
+  button{
+    &.active{
+      background-color: yellow;
+    }
+  }
+  div{
+    width: @size;
+    height: @size;
+    background-color: #ccc;
+    display: none;
+    &.active{
+      display: block;
+    }
+  }
+}

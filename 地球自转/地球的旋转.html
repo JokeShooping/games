@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        html, body {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #container {
+            width: 100%;
+            height: 100%;
+            background-color: black;
+        }
+
+        .to-center {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .ball {
+            border-radius: 50%;
+        }
+
+        ::after {
+            position: absolute;
+            left: 50%;
+            content: '';
+            display: block;
+            left: 50%;
+            top: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+        }
+
+        #sun {
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, white, gold);
+            box-shadow: 0 0 40px 10px gold;
+        }
+
+        #earth {
+            width: 400px;
+            height: 400px;
+            border: 1px solid rgba(255, 255, 255, .4);
+            transform: translate(-50%, -50%);
+            animation: move 10s linear infinite;
+        }
+
+        #earth::after {
+
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, blue, red);
+
+        }
+
+        #moon {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border: 2px solid rgba(0, 255, 0, .4);
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: move 1s linear infinite;
+
+        }
+
+        #moon::after {
+            width: 30px;
+            height: 30px;
+            background-color: #47ff3d;
+        }
+
+        @keyframes move {
+            from {
+                transform: translate(-50%, -50%) rotateZ(0deg);
+            }
+            to {
+                transform: translate(-50%, -50%) rotateZ(360deg);
+            }
+        }
+
+    </style>
+</head>
+<body>
+<div id="container">
+    <div id="sun" class="to-center ball">
+    </div>
+    <div id="earth" class="to-center ball">
+        <div id="moon" class="ball"></div>
+    </div>
+</div>
+</body>
+</html>
